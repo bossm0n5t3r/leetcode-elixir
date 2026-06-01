@@ -2,6 +2,12 @@
 
 Elixir solutions for LeetCode problems.
 
+## Solved Problems
+
+| #    | Title                                                                                                                                   | Solution                                                                                       |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 2144 | [Minimum Cost of Buying Candies With Discount](https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/description/) | [Solution](lib/leetcode_elixir/p2144_minimum_cost_of_buying_candies_with_discount/solution.ex) |
+
 ## Generate a problem scaffold
 
 Run interactive generator:
