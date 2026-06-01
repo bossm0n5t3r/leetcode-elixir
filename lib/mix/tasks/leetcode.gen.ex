@@ -1,8 +1,9 @@
 defmodule Mix.Tasks.Leetcode.Gen do
-  @shortdoc "Generate LeetCode solution, README, and test files"
+  @shortdoc "Generate LeetCode solution, README, test files, and update root README"
 
   @moduledoc """
   Generates a problem directory with README, solution, and ExUnit test files.
+  Also updates the root `README.md` solved-problems table.
 
   ## Usage
 
@@ -33,8 +34,9 @@ defmodule Mix.Tasks.Leetcode.Gen do
         %{args: [[5, 5]], expected: 10}
       ]
 
-  Created files:
+  Created/updated files:
 
+    * `README.md`
     * `lib/leetcode_elixir/p{number}_{slug}/README.md`
     * `lib/leetcode_elixir/p{number}_{slug}/solution.ex`
     * `test/leetcode_elixir/p{number}_{slug}/solution_test.exs`
@@ -86,9 +88,11 @@ defmodule Mix.Tasks.Leetcode.Gen do
     ]
 
     Enum.each(files, fn {path, content} -> write_file!(path, content, opts[:force]) end)
+    update_root_readme!(problem)
 
     Mix.shell().info("Generated LeetCode problem files:")
     Enum.each(files, fn {path, _content} -> Mix.shell().info("  * #{path}") end)
+    Mix.shell().info("Updated README.md")
   end
 
   defp interactive?(opts) do
@@ -397,6 +401,73 @@ defmodule Mix.Tasks.Leetcode.Gen do
 
     - [#{problem.url}](#{problem.url})
     """
+  end
+
+  defp update_root_readme!(problem) do
+    path = "README.md"
+
+    content =
+      if File.exists?(path) do
+        File.read!(path)
+      else
+        "# LeetcodeElixir\n\nElixir solutions for LeetCode problems.\n"
+      end
+
+    updated_content =
+      content
+      |> put_solved_problems_section(solved_problems_table(content, problem))
+      |> ensure_trailing_newline()
+
+    File.write!(path, updated_content)
+  end
+
+  defp solved_problems_table(content, problem) do
+    content
+    |> existing_solved_problem_rows()
+    |> Enum.reject(&(&1.number == problem.number))
+    |> Kernel.++([solved_problem_row(problem)])
+    |> Enum.sort_by(&String.to_integer(&1.number))
+    |> then(fn rows ->
+      [
+        "| # | Title | Solution |",
+        "|---|---|---|",
+        Enum.map(rows, &solved_problem_row_markdown/1)
+      ]
+      |> List.flatten()
+      |> Enum.join("\n")
+    end)
+  end
+
+  defp existing_solved_problem_rows(content) do
+    ~r/^\|\s*(\d+)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*$/m
+    |> Regex.scan(content)
+    |> Enum.map(fn [_, number, title, solution] ->
+      %{number: number, title: title, solution: solution}
+    end)
+  end
+
+  defp solved_problem_row(problem) do
+    %{
+      number: problem.number,
+      title: "[#{problem.clean_title}](#{problem.url})",
+      solution:
+        "[Solution](#{Path.join(["lib", "leetcode_elixir", problem.dir_name, "solution.ex"])})"
+    }
+  end
+
+  defp solved_problem_row_markdown(row) do
+    "| #{row.number} | #{row.title} | #{row.solution} |"
+  end
+
+  defp put_solved_problems_section(content, table) do
+    section = "## Solved Problems\n\n#{table}\n\n"
+    pattern = ~r/^## Solved Problems\s*\n.*?(?=^## |\z)/ms
+
+    if Regex.match?(pattern, content) do
+      Regex.replace(pattern, content, section, global: false)
+    else
+      String.trim_trailing(content) <> "\n\n" <> section
+    end
   end
 
   defp test_code(problem, module_name, function, []) do
