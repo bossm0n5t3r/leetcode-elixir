@@ -7,7 +7,8 @@ defmodule LeetcodeElixir.MixProject do
       version: "0.1.0",
       elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -23,6 +24,12 @@ defmodule LeetcodeElixir.MixProject do
     [
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.40.3", only: :dev, runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      gen_problem: "leetcode.gen"
     ]
   end
 end
