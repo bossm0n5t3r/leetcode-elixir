@@ -6,6 +6,7 @@ Elixir solutions for LeetCode problems.
 
 | #    | Title                                                                                                                                   | Solution                                                                                       |
 | ---- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 1    | [Two Sum](https://leetcode.com/problems/two-sum/description/)                                                                           | [Solution](lib/leetcode_elixir/p1_two_sum/solution.ex)                                         |
 | 2144 | [Minimum Cost of Buying Candies With Discount](https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/description/) | [Solution](lib/leetcode_elixir/p2144_minimum_cost_of_buying_candies_with_discount/solution.ex) |
 
 ## Generate a problem scaffold
