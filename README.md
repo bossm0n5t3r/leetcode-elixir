@@ -4,10 +4,11 @@ Elixir solutions for LeetCode problems.
 
 ## Solved Problems
 
-| #    | Title                                                                                                                                   | Solution                                                                                       |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| 1    | [Two Sum](https://leetcode.com/problems/two-sum/description/)                                                                           | [Solution](lib/leetcode_elixir/p1_two_sum/solution.ex)                                         |
-| 2144 | [Minimum Cost of Buying Candies With Discount](https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/description/) | [Solution](lib/leetcode_elixir/p2144_minimum_cost_of_buying_candies_with_discount/solution.ex) |
+| #    | Title                                                                                                                                         | Solution                                                                                          |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 1    | [Two Sum](https://leetcode.com/problems/two-sum/description/)                                                                                 | [Solution](lib/leetcode_elixir/p1_two_sum/solution.ex)                                            |
+| 2144 | [Minimum Cost of Buying Candies With Discount](https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/description/)       | [Solution](lib/leetcode_elixir/p2144_minimum_cost_of_buying_candies_with_discount/solution.ex)    |
+| 3633 | [Earliest Finish Time for Land and Water Rides I](https://leetcode.com/problems/earliest-finish-time-for-land-and-water-rides-i/description/) | [Solution](lib/leetcode_elixir/p3633_earliest_finish_time_for_land_and_water_rides_i/solution.ex) |
 
 ## Generate a problem scaffold
 
